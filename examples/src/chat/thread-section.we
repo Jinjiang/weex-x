@@ -1,0 +1,49 @@
+<template>
+  <div>
+    <div>
+      <text if="{{ unreadCount }}">
+        Unread threads: {{ unreadCount }}
+      </text>
+    </div>
+    <div>
+      <thread
+        repeat="thread in threads"
+        key="{{ thread.id }}"
+        thread="{{ thread }}"
+        active="{{ thread.id === currentThread.id }}">
+      </thread>
+    </div>
+  </div>
+</template>
+
+<script>
+import { x, mapGetters } from '../../../'
+
+var result = x({
+  computed: {
+    ...mapGetters([
+      'threads',
+      'currentThread'
+    ]),
+    unreadCount () {
+      const threads = this.threads
+      return Object.keys(threads).reduce((count, id) => {
+        return threads[id].lastMessage.isRead
+          ? count
+          : count + 1
+      }, 0)
+    }
+  },
+  ready: function () {
+    console.log(this, this.switchThread)
+    this.$on('switchthread', this.switchThread.bind(this))
+  },
+  methods: {
+    switchThread (id) {
+      this.$store.dispatch('switchThread', { id })
+    }
+  }
+})
+console.log(result)
+module.exports = result
+</script>

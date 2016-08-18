@@ -1,0 +1,18 @@
+<template>
+  <div onclick="$emit('switchthread', thread.id)">
+    <text>{{ thread.name }}</text>
+    <text>{{ thread.lastMessage.timestamp }}</text>
+    <text>{{ thread.lastMessage.text }}</text>
+  </div>
+</template>
+
+<script>
+import { x } from '../../../'
+
+module.exports = x({
+  data: {
+    thread: {},
+    active: false
+  }
+})
+</script>

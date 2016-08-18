@@ -1,0 +1,17 @@
+<template>
+  <div>
+    <text>{{ message.authorName }}</text>
+    <text>{{ message.timestamp }}</text>
+    <text>{{ message.text }}</text>
+  </div>
+</template>
+
+<script>
+import { x } from '../../../'
+
+module.exports = x({
+  data: {
+    message: {}
+  }
+})
+</script>

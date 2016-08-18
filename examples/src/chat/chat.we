@@ -1,0 +1,18 @@
+<template>
+  <div>
+    <thread-section></thread-section>
+    <message-section></message-section>
+  </div>
+</template>
+
+<script>
+import { x } from '../../../'
+import store from './x/store.js'
+import { getAllMessages } from './x/actions.js'
+
+module.exports = x({
+  store
+})
+
+getAllMessages(store)
+</script>

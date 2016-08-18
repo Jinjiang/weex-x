@@ -1,7 +1,8 @@
 module.exports = {
   entry: {
     'counter': './src/counter/counter.we?entry',
-    'counter-hot': './src/counter-hot/counter.we?entry'
+    'counter-hot': './src/counter-hot/counter.we?entry',
+    'chat': './src/chat/chat.we?entry'
   },
   output: {
     path: './dist',

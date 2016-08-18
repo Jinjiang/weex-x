@@ -1,0 +1,53 @@
+<template>
+  <div>
+    <text>{{ thread.name }}</text>
+    <div id="list">
+      <message
+        repeat="message in sortedMessages"
+        key="{{ message.id }}"
+        message="{{ message }}"></message>
+    </div>
+    <input id="input"></input>
+    <text onclick="sendMessage">Send</text>
+  </div>
+</template>
+
+<script>
+import { x, mapGetters } from '../../../'
+
+module.exports = x({
+  computed: {
+    ...mapGetters({
+      thread: 'currentThread',
+      messages: 'currentMessages'
+    }),
+    sortedMessages () {
+      return this.messages
+        .slice()
+        .sort((a, b) => a.timestamp - b.timestamp)
+    }
+  },
+  watch: {
+    'thread.lastMessage': function () {
+      setTimeout(() => {
+        const ul = this.$el('list')
+        const lastLi = ul.children[ul.children.length - 1]
+        require('@weex-module/dom').scrollToElement(lastLi, {})
+      })
+    }
+  },
+  methods: {
+    sendMessage (e) {
+      const input = this.$('input')
+      const text = input.attr.value
+      if (text.trim()) {
+        this.$store.dispatch('sendMessage', {
+          text,
+          thread: this.thread
+        })
+        input.setAttr('value', '')
+      }
+    }
+  }
+})
+</script>

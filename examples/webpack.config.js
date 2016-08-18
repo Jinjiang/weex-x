@@ -1,8 +1,11 @@
 module.exports = {
-  entry: './counter.we?entry',
+  entry: {
+    'counter': './src/counter/counter.we?entry',
+    'counter-hot': './src/counter-hot/counter.we?entry'
+  },
   output: {
     path: './dist',
-    filename: 'counter.js'
+    filename: '[name].js'
   },
   module: {
     loaders: [

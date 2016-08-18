@@ -1,0 +1,31 @@
+<template>
+  <div>
+    <text>Value: {{ count }}</text>
+    <text onclick="increment">+</text>
+    <text onclick="decrement">-</text>
+    <text onclick="incrementIfOdd">Increment if odd</text>
+    <text onclick="incrementAsync">Increment async</text>
+    <div>
+      <text>Recent History (last 5 entries): {{ recentHistory }}</text>
+    </div>
+  </div>
+</template>
+
+<script>
+import { x, mapGetters, mapActions } from '../../../'
+import store from './x/store.js'
+
+module.exports = x({
+  store,
+  computed: mapGetters([
+    'count',
+    'recentHistory'
+  ]),
+  methods: mapActions([
+    'increment',
+    'decrement',
+    'incrementIfOdd',
+    'incrementAsync'
+  ])
+})
+</script>

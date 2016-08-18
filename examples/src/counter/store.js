@@ -1,4 +1,4 @@
-import { Store } from '../'
+import { Store } from '../../../'
 
 // root state object.
 // each Weex-x instance is just a single state tree.

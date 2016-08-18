@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { x, mapGetters, mapActions } from '../'
+import { x, mapGetters, mapActions } from '../../../'
 import store from './store.js'
 
 module.exports = x({

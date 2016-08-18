@@ -1,14 +1,13 @@
 <template>
-  <div>
-    <div>
-      <text if="{{ unreadCount }}">
+  <div class="wrapper">
+    <div class="header">
+      <text class="count" if="{{ unreadCount }}">
         Unread threads: {{ unreadCount }}
       </text>
     </div>
-    <div>
+    <div class="list">
       <thread
-        repeat="thread in threads"
-        key="{{ thread.id }}"
+        repeat="thread in threadList"
         thread="{{ thread }}"
         active="{{ thread.id === currentThread.id }}">
       </thread>
@@ -16,27 +15,31 @@
   </div>
 </template>
 
+<style>
+  .wrapper {}
+  .header { height: 80; }
+  .count { font-size: 32; }
+  .list { border-width: 4; border-color: #ccf; }
+</style>
+
 <script>
 import { x, mapGetters } from '../../../'
 
-var result = x({
+module.exports = x({
   computed: {
     ...mapGetters([
-      'threads',
+      'threadList',
       'currentThread'
     ]),
     unreadCount () {
-      const threads = this.threads
-      return Object.keys(threads).reduce((count, id) => {
-        return threads[id].lastMessage.isRead
-          ? count
-          : count + 1
+      const threadList = this.threadList
+      return threadList.reduce((count, thread) => {
+        return (thread.lastMessage && thread.lastMessage.isRead) ? count : count + 1
       }, 0)
     }
   },
   ready: function () {
-    console.log(this, this.switchThread)
-    this.$on('switchthread', this.switchThread.bind(this))
+    this.$on('switchthread', e => this.switchThread(e.detail))
   },
   methods: {
     switchThread (id) {
@@ -44,6 +47,4 @@ var result = x({
     }
   }
 })
-console.log(result)
-module.exports = result
 </script>

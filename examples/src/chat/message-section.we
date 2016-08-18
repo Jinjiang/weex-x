@@ -1,21 +1,36 @@
 <template>
-  <div>
-    <text>{{ thread.name }}</text>
-    <div id="list">
+  <div class="wrapper">
+    <text class="thread-heading">{{ thread && thread.name }}</text>
+    <div id="list" class="list">
       <message
-        repeat="message in sortedMessages"
-        key="{{ message.id }}"
+        repeat="(i, message) in sortedMessages"
         message="{{ message }}"></message>
     </div>
-    <input id="input"></input>
-    <text onclick="sendMessage">Send</text>
+    <div class="composer">
+      <input class="composer-input" id="input" value="{{inputValue}}" oninput="update"></input>
+      <text class="composer-button" onclick="sendMessage">Send</text>
+    </div>
   </div>
 </template>
+
+<style>
+  .wrapper { padding-top: 24; }
+  .thread-heading { height: 80; font-size: 32; }
+  .list { border-width: 4; border-color: #ccf; }
+  .composer { flex-direction: row; margin-top: 20; padding: 20; border-width: 4; border-color: #ccf; }
+  .composer-input { flex: 1; font-size: 28; }
+  .composer-button { font-size: 28; background-color: #eee; border-radius: 10; padding: 20; }
+</style>
 
 <script>
 import { x, mapGetters } from '../../../'
 
 module.exports = x({
+  data: function () {
+    return {
+      inputValue: ''
+    }
+  },
   computed: {
     ...mapGetters({
       thread: 'currentThread',
@@ -37,15 +52,17 @@ module.exports = x({
     }
   },
   methods: {
+    update (e) {
+      this.inputValue = e.value
+    },
     sendMessage (e) {
-      const input = this.$('input')
-      const text = input.attr.value
+      const text = this.inputValue
       if (text.trim()) {
         this.$store.dispatch('sendMessage', {
           text,
           thread: this.thread
         })
-        input.setAttr('value', '')
+        this.inputValue = ''
       }
     }
   }

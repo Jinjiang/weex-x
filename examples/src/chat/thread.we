@@ -1,18 +1,33 @@
 <template>
-  <div onclick="$emit('switchthread', thread.id)">
-    <text>{{ thread.name }}</text>
-    <text>{{ thread.lastMessage.timestamp }}</text>
-    <text>{{ thread.lastMessage.text }}</text>
+  <div class="wrapper" onclick="$dispatch('switchthread', thread.id)">
+    <div style="flex-direction: row;">
+      <text class="name">{{ thread && thread.name }}</text>
+      <text class="time">{{ thread && thread.lastMessage && time(thread.lastMessage.timestamp) }}</text>
+    </div>
+    <text class="last-message">{{ thread && thread.lastMessage && thread.lastMessage.text }}</text>
   </div>
 </template>
 
+<style>
+  .wrapper { padding-top: 24; padding-left: 28; padding-right: 28; padding-bottom: 28; }
+  .name { color: #66c; font-size: 32; flex: 1; }
+  .time { color: #aad; font-size: 24; }
+  .text { font-size: 28; padding-top: 20; }
+</style>
+
 <script>
 import { x } from '../../../'
+import { time } from './api/util.js'
 
 module.exports = x({
-  data: {
-    thread: {},
-    active: false
+  data: function () {
+    return {
+      thread: {},
+      active: false
+    }
+  },
+  methods: {
+    time: time
   }
 })
 </script>

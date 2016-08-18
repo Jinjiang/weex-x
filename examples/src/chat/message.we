@@ -1,17 +1,32 @@
 <template>
-  <div>
-    <text>{{ message.authorName }}</text>
-    <text>{{ message.timestamp }}</text>
-    <text>{{ message.text }}</text>
+  <div class="wrapper">
+    <div style="flex-direction: row;">
+      <text class="name">{{ message.authorName }}</text>
+      <text class="time">{{ time(message.timestamp) }}</text>
+    </div>
+    <text class="text">{{ message.text }}</text>
   </div>
 </template>
 
+<style>
+  .wrapper { padding-top: 24; padding-left: 28; padding-right: 28; padding-bottom: 28; }
+  .name { color: #66c; font-size: 32; flex: 1; }
+  .time { color: #aad; font-size: 24; }
+  .text { font-size: 28; padding-top: 20; }
+</style>
+
 <script>
 import { x } from '../../../'
+import { time } from './api/util.js'
 
 module.exports = x({
-  data: {
-    message: {}
+  data: function () {
+    return {
+      message: {}
+    }
+  },
+  methods: {
+    time: time
   }
 })
 </script>

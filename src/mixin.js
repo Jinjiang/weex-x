@@ -11,7 +11,7 @@ export function x (options) {
   // set new init lifecycle
   options.init = function () {
     const opt = this._options
-    const parent = this._parentVm || {}
+    const parent = this._parent || {}
 
     // set $store from option or parent
     if (opt.store) {

@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "rollup -wmc",
     "build": "rollup -c && uglifyjs dist/weex-x.js -cm --comments -o dist/weex-x.min.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --compilers js:babel-core/register"
   },
   "repository": {
     "type": "git",
@@ -34,9 +34,14 @@
     "babel-preset-es2015-rollup": "^1.1.1",
     "babel-preset-stage-2": "^6.1.18",
     "babel-runtime": "^6.0.0",
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2",
     "rollup": "^0.34.1",
     "rollup-plugin-buble": "^0.12.1",
     "rollup-watch": "^2.5.0",
-    "uglify-js": "^2.6.2"
+    "sinon": "^1.17.5",
+    "sinon-chai": "^2.8.0",
+    "uglify-js": "^2.6.2",
+    "weex-js-framework": "^0.15.5"
   }
 }

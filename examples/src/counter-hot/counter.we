@@ -12,20 +12,23 @@
 </template>
 
 <script>
-import { x, mapGetters, mapActions } from '../../../'
+import { init, mapGetters, mapActions } from '../../../'
 import store from './x/store.js'
 
-module.exports = x({
+export {
   store,
-  computed: mapGetters([
-    'count',
-    'recentHistory'
-  ]),
-  methods: mapActions([
-    'increment',
-    'decrement',
-    'incrementIfOdd',
-    'incrementAsync'
-  ])
-})
+  init
+}
+
+export const computed = mapGetters([
+  'count',
+  'recentHistory'
+])
+
+export const methods = mapActions([
+  'increment',
+  'decrement',
+  'incrementIfOdd',
+  'incrementAsync'
+])
 </script>

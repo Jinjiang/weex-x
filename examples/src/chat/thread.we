@@ -16,18 +16,21 @@
 </style>
 
 <script>
-import { x } from '../../../'
+import { init } from '../../../'
 import { time } from './api/util.js'
 
-module.exports = x({
-  data: function () {
-    return {
-      thread: {},
-      active: false
-    }
-  },
-  methods: {
-    time: time
+export {
+  init
+}
+
+export function data () {
+  return {
+    thread: {},
+    active: false
   }
-})
+}
+
+export const methods = {
+  time: time
+}
 </script>

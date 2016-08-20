@@ -23,48 +23,53 @@
 </style>
 
 <script>
-import { x, mapGetters } from '../../../'
+import { init, mapGetters } from '../../../'
 
-module.exports = x({
-  data: function () {
-    return {
-      inputValue: ''
-    }
+export {
+  init
+}
+
+export function data () {
+  return {
+    inputValue: ''
+  }
+}
+
+export const computed = {
+  ...mapGetters({
+    thread: 'currentThread',
+    messages: 'currentMessages'
+  }),
+  sortedMessages () {
+    return this.messages
+      .slice()
+      .sort((a, b) => a.timestamp - b.timestamp)
+  }
+}
+
+export const watch = {
+  'thread.lastMessage': function () {
+    setTimeout(() => {
+      const ul = this.$el('list')
+      const lastLi = ul.children[ul.children.length - 1]
+      require('@weex-module/dom').scrollToElement(lastLi, {})
+    })
+  }
+}
+
+export const methods = {
+  update (e) {
+    this.inputValue = e.value
   },
-  computed: {
-    ...mapGetters({
-      thread: 'currentThread',
-      messages: 'currentMessages'
-    }),
-    sortedMessages () {
-      return this.messages
-        .slice()
-        .sort((a, b) => a.timestamp - b.timestamp)
-    }
-  },
-  watch: {
-    'thread.lastMessage': function () {
-      setTimeout(() => {
-        const ul = this.$el('list')
-        const lastLi = ul.children[ul.children.length - 1]
-        require('@weex-module/dom').scrollToElement(lastLi, {})
+  sendMessage (e) {
+    const text = this.inputValue
+    if (text.trim()) {
+      this.$store.dispatch('sendMessage', {
+        text,
+        thread: this.thread
       })
-    }
-  },
-  methods: {
-    update (e) {
-      this.inputValue = e.value
-    },
-    sendMessage (e) {
-      const text = this.inputValue
-      if (text.trim()) {
-        this.$store.dispatch('sendMessage', {
-          text,
-          thread: this.thread
-        })
-        this.inputValue = ''
-      }
+      this.inputValue = ''
     }
   }
-})
+}
 </script>

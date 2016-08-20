@@ -23,28 +23,32 @@
 </style>
 
 <script>
-import { x, mapGetters } from '../../../'
+import { init, mapGetters } from '../../../'
 
-module.exports = x({
-  computed: {
-    ...mapGetters([
-      'threadList',
-      'currentThread'
-    ]),
-    unreadCount () {
-      const threadList = this.threadList
-      return threadList.reduce((count, thread) => {
-        return (thread.lastMessage && thread.lastMessage.isRead) ? count : count + 1
-      }, 0)
-    }
-  },
-  ready: function () {
-    this.$on('switchthread', e => this.switchThread(e.detail))
-  },
-  methods: {
-    switchThread (id) {
-      this.$store.dispatch('switchThread', { id })
-    }
+export {
+  init
+}
+
+export function ready () {
+  this.$on('switchthread', e => this.switchThread(e.detail))
+}
+
+export const computed = {
+  ...mapGetters([
+    'threadList',
+    'currentThread'
+  ]),
+  unreadCount () {
+    const threadList = this.threadList
+    return threadList.reduce((count, thread) => {
+      return (thread.lastMessage && thread.lastMessage.isRead) ? count : count + 1
+    }, 0)
   }
-})
+}
+
+export const methods = {
+  switchThread (id) {
+    this.$store.dispatch('switchThread', { id })
+  }
+}
 </script>

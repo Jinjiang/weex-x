@@ -10,13 +10,14 @@
 </style>
 
 <script>
-import { x } from '../../../'
+import { init } from '../../../'
 import store from './x/store.js'
 import { getAllMessages } from './x/actions.js'
 
-module.exports = x({
+export {
+  init,
   store
-})
+}
 
 getAllMessages(store)
 </script>

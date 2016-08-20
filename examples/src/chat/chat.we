@@ -6,7 +6,7 @@
 </template>
 
 <style>
-  .chatapp { margin: 40; }
+  .chatapp { padding: 40; }
 </style>
 
 <script>

@@ -1,6 +1,6 @@
 import * as types from './mutation-types'
 
-const Vm = __weex_bootstrap__.Vm
+const Vm = __weex_viewmodel__
 const set = Vm.set
 
 export default {

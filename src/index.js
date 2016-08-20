@@ -7,12 +7,12 @@
  */
 
 import { Store } from './store'
-import { x } from './mixin'
-import { mapState, mapMutations, mapGetters, mapActions } from './util'
+import { init } from './init'
+import { mapState, mapMutations, mapGetters, mapActions } from './helpers'
 
 export default {
   Store,
-  x,
+  init,
   mapState,
   mapMutations,
   mapGetters,

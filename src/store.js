@@ -6,10 +6,10 @@
  * Modified by Jinjiang
  */
 
-const Vm = __weex_bootstrap__.Vm
-
 assert(WXEnvironment, `No Weex environment found.`)
-assert(Vm, `No Weex bootstrap function found.`)
+assert(__weex_viewmodel__, `No Weex bootstrap function found.`)
+
+const Vm = __weex_viewmodel__
 
 export class Store {
   constructor (options = {}) {

@@ -7,7 +7,7 @@ chai.use(sinonChai)
 import { Vm } from './env'
 import {
   Store,
-  x,
+  init,
   mapState,
   mapMutations,
   mapGetters,
@@ -218,10 +218,12 @@ describe('Weex-x Store', () => {
 
   it('store injection', () => {
     const store = new Store()
-    const vm = new Vm('', x({
+    console.log(typeof init)
+    const vm = new Vm('', {
+      init,
       store
-    }))
-    const child = new Vm('', x({}), vm)
+    })
+    const child = new Vm('', { init }, vm)
     expect(child.$store).eql(store)
   })
 })
@@ -409,10 +411,11 @@ describe('Weex-x utils', () => {
         a: 1
       }
     })
-    const vm = new Vm('', x({
+    const vm = new Vm('', {
       store,
+      init,
       computed: mapState(['a'])
-    }))
+    })
     expect(vm.a).eql(1)
     store.state.a++
     expect(vm.a).eql(2)
@@ -427,14 +430,15 @@ describe('Weex-x utils', () => {
         b: () => 2
       }
     })
-    const vm = new Vm('', x({
+    const vm = new Vm('', {
       store,
+      init,
       computed: mapState({
         a: (state, getters) => {
           return state.a + getters.b
         }
       })
-    }))
+    })
     expect(vm.a).eql(3)
     store.state.a++
     expect(vm.a).eql(4)
@@ -448,10 +452,11 @@ describe('Weex-x utils', () => {
         dec: state => state.count--
       }
     })
-    const vm = new Vm('', x({
+    const vm = new Vm('', {
       store,
+      init,
       methods: mapMutations(['inc', 'dec'])
-    }))
+    })
     vm.inc()
     expect(store.state.count).eql(1)
     vm.dec()
@@ -466,13 +471,14 @@ describe('Weex-x utils', () => {
         dec: state => state.count--
       }
     })
-    const vm = new Vm('', x({
+    const vm = new Vm('', {
       store,
+      init,
       methods: mapMutations({
         plus: 'inc',
         minus: 'dec'
       })
-    }))
+    })
     vm.plus()
     expect(store.state.count).eql(1)
     vm.minus()
@@ -491,10 +497,11 @@ describe('Weex-x utils', () => {
         negative: ({ count }) => count < 0
       }
     })
-    const vm = new Vm('', x({
+    const vm = new Vm('', {
       store,
+      init,
       computed: mapGetters(['hasAny', 'negative'])
-    }))
+    })
     expect(vm.hasAny).eql(false)
     expect(vm.negative).eql(false)
     store.commit('inc')
@@ -518,13 +525,14 @@ describe('Weex-x utils', () => {
         negative: ({ count }) => count < 0
       }
     })
-    const vm = new Vm('', x({
+    const vm = new Vm('', {
       store,
+      init,
       computed: mapGetters({
         a: 'hasAny',
         b: 'negative'
       })
-    }))
+    })
     expect(vm.a).eql(false)
     expect(vm.b).eql(false)
     store.commit('inc')
@@ -545,10 +553,11 @@ describe('Weex-x utils', () => {
         b
       }
     })
-    const vm = new Vm('', x({
+    const vm = new Vm('', {
       store,
+      init,
       methods: mapActions(['a', 'b'])
-    }))
+    })
     vm.a()
     expect(a.calledOnce).is.true
     expect(b.notCalled).is.true
@@ -565,13 +574,14 @@ describe('Weex-x utils', () => {
         b
       }
     })
-    const vm = new Vm('', x({
+    const vm = new Vm('', {
       store,
+      init,
       methods: mapActions({
         foo: 'a',
         bar: 'b'
       })
-    }))
+    })
     vm.foo()
     expect(a.calledOnce).is.true
     expect(b.notCalled).is.true
@@ -580,20 +590,23 @@ describe('Weex-x utils', () => {
   })
 })
 
-describe('Weex-x install x()', () => {
+describe('Weex-x install init()', () => {
   it('generate options', () => {
     function Obj (options, parent) {
       this._options = options
       this._parent = parent
       options.init && options.init.call(this)
     }
-    const init = sinon.spy()
+    const oriInit = sinon.spy()
     const store = { a: 1 }
-    const options = { store, init }
+    const options = {
+      store,
+      init: init(oriInit)
+    }
 
-    const target = new Obj(x(options))
+    const target = new Obj(options)
 
-    expect(init.calledOnce).is.true
+    expect(oriInit.calledOnce).is.true
     expect(target.$store).eql(store)
   })
 })

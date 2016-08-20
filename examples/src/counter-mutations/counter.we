@@ -1,0 +1,40 @@
+<template>
+  <div>
+    <text>Clicked: {{ $store.state.count }} times, count is {{ evenOrOdd }}.</text>
+    <text onclick="increment">+</text>
+    <text onclick="decrement">-</text>
+    <text onclick="incrementIfOdd">Increment if odd</text>
+    <text onclick="incrementAsync">Increment async</text>
+  </div>
+</template>
+
+<script>
+import { init, mapGetters, mapMutations } from '../../../'
+import store from './store.js'
+
+export {
+  store,
+  init
+}
+
+export const computed = mapGetters([
+  'evenOrOdd'
+])
+
+export const methods = mapMutations([
+  'increment',
+  'decrement'
+])
+
+methods.incrementIfOdd = function () {
+  if (this.evenOrOdd === 'odd') {
+    this.increment()
+  }
+}
+
+methods.incrementAsync = function () {
+  setTimeout(() => {
+    this.increment()
+  }, 1000)
+}
+</script>

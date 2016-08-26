@@ -52,12 +52,8 @@ And then just set `store` to the *top* Vm options with the store you created and
 import { Store, init } in 'weex-x'
 const store = new Store({...})
 export {
-  store, init,
-  methods: {
-    foo: function () {
-      // this.$store
-    }
-  }
+  store,
+  init,
 }
 ```
 
@@ -66,11 +62,12 @@ If your Vm already has `init` in its options. You can use it like this:
 ```javascript
 import { Store, init } in 'weex-x'
 const store = new Store({...})
+init = init(function () {
+  // todo
+})
 export {
   store,
-  init(function () {
-    // todo
-  })
+  init,
 }
 ```
 

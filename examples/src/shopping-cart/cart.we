@@ -1,0 +1,42 @@
+<template>
+  <div class="cart">
+    <text class="h2">Your Cart</text>
+    <text if="!products.length">Please add some products to cart.</text>
+    <div>
+      <text repeat="p in products">
+        {{ p.title }} - {{ currency(p.price) }} x {{ p.quantity }}
+      </text>
+    </div>
+    <text>Total: {{ currency(total) }}</text>
+    <text if="!products.length" onclick="checkout(products)">Checkout</text>
+    <text if="checkoutStatus">Checkout {{ checkoutStatus }}.</text>
+  </div>
+</template>
+
+<script>
+import { init, mapGetters } from '../../../'
+import { currency } from './api/util'
+
+export {
+  init
+}
+
+export const computed = {
+  ...mapGetters({
+    products: 'cartProducts',
+    checkoutStatus: 'checkoutStatus'
+  }),
+  total () {
+    return this.products.reduce((total, p) => {
+      return total + p.price * p.quantity
+    }, 0)
+  }
+}
+
+export const methods = {
+  checkout (products) {
+    this.$store.dispatch('checkout', products)
+  },
+  currency
+}
+</script>

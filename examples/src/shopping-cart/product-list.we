@@ -1,0 +1,36 @@
+<template>
+  <div>
+    <div repeat="p in products">
+      <text>
+        {{ p.title }} - {{ currency(p.price) }}
+      </text>
+      <text if="!p.inventory" onclick="addToCart(p)">
+        Add to cart
+      </text>
+    </div>
+  </div>
+</template>
+
+<script>
+import { init, mapGetters, mapActions } from '../../../'
+import { currency } from './api/util'
+
+export {
+  init
+}
+
+export const computed = mapGetters({
+  products: 'allProducts'
+})
+
+export const methods = {
+  ...mapActions([
+    'addToCart'
+  ]),
+  currency
+}
+
+export function created () {
+  this.$store.dispatch('getAllProducts')
+}
+</script>

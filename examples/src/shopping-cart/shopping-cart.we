@@ -1,0 +1,20 @@
+<template>
+  <div>
+    <text class="h1">Shopping Cart Example</text>
+    <div class="hr"></div>
+    <text class="h2">Products</text>
+    <product-list></product-list>
+    <div class="hr"></div>
+    <cart></cart>
+  </div>
+</template>
+
+<script>
+import { init } from '../../../'
+import store from './x/store.js'
+
+export {
+  store,
+  init
+}
+</script>

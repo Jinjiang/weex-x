@@ -1,6 +1,6 @@
 {
   "name": "weex-x",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Flux-inspired-Architecture-Vuex-inspired-Architecture for Weex.",
   "main": "dist/weex-x.js",
   "files": [

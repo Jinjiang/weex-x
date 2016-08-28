@@ -2,7 +2,7 @@
 
 Flux-inspired-Architecture-Vuex-inspired-Architecture for Weex.
 
-_note: this repo only works well with [`jinjiang/jsfm-feature-x`](https://github.com/jinjiang/weex/tree/jsfm-feature-x) branch of Weex_
+_note: this repo only works well with Weex JS Framework v0.16.x and higher._
 
 ## Install
 
@@ -52,12 +52,8 @@ And then just set `store` to the *top* Vm options with the store you created and
 import { Store, init } in 'weex-x'
 const store = new Store({...})
 export {
-  store, init,
-  methods: {
-    foo: function () {
-      // this.$store
-    }
-  }
+  store,
+  init,
 }
 ```
 
@@ -66,11 +62,12 @@ If your Vm already has `init` in its options. You can use it like this:
 ```javascript
 import { Store, init } in 'weex-x'
 const store = new Store({...})
+init = init(function () {
+  // todo
+})
 export {
   store,
-  init(function () {
-    // todo
-  })
+  init,
 }
 ```
 

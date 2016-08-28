@@ -1,17 +1,24 @@
 <template>
-  <div class="cart">
-    <text class="h2">Your Cart</text>
-    <text if="!products.length">Please add some products to cart.</text>
+  <div class="wrapper">
+    <text class="description tips" if="!products.length">Please add some products to cart.</text>
     <div>
-      <text repeat="p in products">
+      <text repeat="p in products" class="description">
         {{ p.title }} - {{ currency(p.price) }} x {{ p.quantity }}
       </text>
     </div>
-    <text>Total: {{ currency(total) }}</text>
-    <text if="!products.length" onclick="checkout(products)">Checkout</text>
-    <text if="checkoutStatus">Checkout {{ checkoutStatus }}.</text>
+    <text class="description total">Total: {{ currency(total) }}</text>
+    <text class="btn" if="products.length" onclick="checkout(products)">Checkout</text>
+    <text class="description status" if="checkoutStatus">Checkout {{ checkoutStatus }}.</text>
   </div>
 </template>
+
+<style>
+  .wrapper { margin: 20; }
+  .btn { text-align: center; width: 300; border-radius: 10; padding-left: 20; padding-right: 20; padding-top: 10; padding-bottom: 10; margin-bottom: 20; background-color: #999; color: white; }
+  .description { font-size: 32px; margin-bottom: 10; }
+  .tips, .status { font-style: italic; }
+  .total { font-weight: bold; }
+</style>
 
 <script>
 import { init, mapGetters } from '../../../'

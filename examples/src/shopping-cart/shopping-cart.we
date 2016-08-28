@@ -5,9 +5,16 @@
     <text class="h2">Products</text>
     <product-list></product-list>
     <div class="hr"></div>
+    <text class="h2">Your Cart</text>
     <cart></cart>
   </div>
 </template>
+
+<style>
+  .h1 { font-size: 64; font-weight: bold; margin: 20; }
+  .h2 { font-size: 56; font-weight: bold; margin: 20; }
+  .hr { margin: 20; border-bottom-width: 3; border-bottom-color: #999; }
+</style>
 
 <script>
 import { init } from '../../../'

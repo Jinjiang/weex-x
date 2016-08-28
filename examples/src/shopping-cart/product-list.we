@@ -1,15 +1,21 @@
 <template>
-  <div>
+  <div class="wrapper">
     <div repeat="p in products">
-      <text>
+      <text class="description">
         {{ p.title }} - {{ currency(p.price) }}
       </text>
-      <text if="!p.inventory" onclick="addToCart(p)">
+      <text class="btn" if="p.inventory" onclick="addToCart(p)">
         Add to cart
       </text>
     </div>
   </div>
 </template>
+
+<style>
+  .wrapper { margin: 20; }
+  .btn { text-align: center; width: 300; border-radius: 10; padding-left: 20; padding-right: 20; padding-top: 10; padding-bottom: 10; margin-bottom: 20; background-color: #999; color: white; }
+  .description { font-size: 32px; margin-bottom: 10; }
+</style>
 
 <script>
 import { init, mapGetters, mapActions } from '../../../'

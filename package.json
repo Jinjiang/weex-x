@@ -21,7 +21,7 @@
     "flux"
   ],
   "author": "jinjiang <zhaojinjiang@me.com>",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Jinjiang/weex-x/issues"
   },
